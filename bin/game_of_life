@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.prepend('lib')
+require 'grid'
+
+seed = File.read(ARGV.first)
+  .gsub("⬛️", "x")
+  .gsub("⬜️", "_")
+
+grid = Grid.new(seed)
+
+loop do
+  grid.next_generation
+  system('clear')
+  puts "Generation ##{grid.generation}"
+  puts grid.pretty_string
+  sleep(0.2)
+end

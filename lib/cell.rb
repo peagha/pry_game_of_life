@@ -1,14 +1,6 @@
 class Cell
   attr_writer :neighbours
 
-  def tile
-    alive? ? '⬛️' : '⬜️'
-  end
-
-  def inspect
-    "#<Cell #{tile}>"
-  end
-
   def initialize(alive)
     @alive = alive
   end
@@ -19,6 +11,7 @@ class Cell
 
   def calculate_next_generation
     alive_neighbours = @neighbours.count(&:alive?)
+
     @next_generation_alive =
       if alive?
         case alive_neighbours
@@ -33,5 +26,13 @@ class Cell
 
   def next_generation
     @alive = @next_generation_alive
+  end
+
+  def tile
+    alive? ? '⬛️' : '⬜️'
+  end
+
+  def inspect
+    "#<Cell #{tile}>"
   end
 end
