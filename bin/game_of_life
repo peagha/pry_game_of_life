@@ -14,5 +14,5 @@ loop do
   system('clear')
   puts "Generation ##{grid.generation}"
   puts grid.pretty_string
-  sleep(0.2)
+  sleep(0.1)
 end

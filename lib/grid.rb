@@ -19,11 +19,8 @@ class Grid
     @grid = Matrix.rows(@grid)
 
     @grid.each_with_index do |cell, line_index, column_index|
-      line_range = [0, line_index - 1].max .. line_index + 1
-      column_range = [0, column_index - 1].max .. column_index + 1
-
       cell.neighbours =
-        @grid.minor(line_range, column_range).entries - [cell]
+        @grid.minor(line_index - 1, 3, column_index - 1, 3).entries - [cell]
     end
   end
 
@@ -40,7 +37,7 @@ class Grid
       .then { |lines| lines.join("\n") }
   end
 
-  def inspect
-    "#<Grid \n#{pretty_string}>"
-  end
+  # def inspect
+  #   "#<Grid \n#{pretty_string}>"
+  # end
 end

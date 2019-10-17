@@ -32,7 +32,7 @@ class Cell
     alive? ? '⬛️' : '⬜️'
   end
 
-  def inspect
-    "#<Cell #{tile}>"
-  end
+  # def inspect
+  #   "#<Cell #{tile}>"
+  # end
 end
