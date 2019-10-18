@@ -37,6 +37,29 @@ class Grid
       .then { |lines| lines.join("\n") }
   end
 
+  # Internal: Generates a string with line and column numbers for debug purposes.
+  #
+  # Examples
+  #
+  #   grid.debug_string
+  #   # => 0 - 0⬜️1⬜️2⬜️3
+  #   #    1 - 0⬜️1⬜️2⬜️3
+  #   #    2 - 0⬜️1⬛️2⬛️3
+  #
+  # Returns the debug String.
+  def debug_string
+    column_chars = @grid.column_size.to_s.length
+    line_chars = @grid.row_size.to_s.length
+    lines = @grid.to_a.each_with_index.map do |line, line_index|
+      line_string = line.each_with_index.map do |cell, column_index|
+        "%#{column_chars}i%s" % [column_index, cell.tile]
+      end
+      "%#{line_chars}i - %s" % [line_index, line_string.join]
+    end
+
+    lines.join("\n")
+  end
+
   # def inspect
   #   "#<Grid \n#{pretty_string}>"
   # end
