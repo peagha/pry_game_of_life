@@ -37,12 +37,21 @@ class Grid
       .then { |lines| lines.join("\n") }
   end
 
-  # Internal: Generates a string with line and column numbers for debug purposes.
+  # Internal: Generates a String with line and column numbers for debug purposes.
+  #
+  # paint - The cell (or Array of cells) to highlight using a cricle instead of
+  # a square.
   #
   # Examples
   #
   #   grid.debug_string
   #   # => 0 - 0⬜️1⬜️2⬜️3
+  #   #    1 - 0⬜️1⬜️2⬜️3
+  #   #    2 - 0⬜️1⬛️2⬛️3
+  #
+  #
+  #   grid.debug_string(cell)
+  #   # => 0 - 0⚪️1⬜️2⬜️3
   #   #    1 - 0⬜️1⬜️2⬜️3
   #   #    2 - 0⬜️1⬛️2⬛️3
   #
@@ -52,7 +61,9 @@ class Grid
     line_chars = @grid.row_size.to_s.length
     lines = @grid.to_a.each_with_index.map do |line, line_index|
       line_string = line.each_with_index.map do |cell, column_index|
-        tile = paint.include?(cell) ? '🔴' : cell.tile
+        tile = Array(paint).include?(cell) ?
+          cell.tile.gsub("⬛️", "⚫️").gsub("⬜️", "⚪️") :
+          cell.tile
         "%#{column_chars}i%s" % [column_index, tile]
       end
       "%#{line_chars}i - %s" % [line_index, line_string.join]
