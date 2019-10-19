@@ -25,8 +25,8 @@ class Grid
   end
 
   def next_generation
-    @grid.entries.each(&:calculate_next_generation)
-    @grid.entries.each(&:next_generation)
+    @grid.entries.each { |cell| cell.calculate_next_generation }
+    @grid.entries.each { |cell| cell.next_generation }
     @generation += 1
     self
   end
@@ -47,12 +47,13 @@ class Grid
   #   #    2 - 0⬜️1⬛️2⬛️3
   #
   # Returns the debug String.
-  def debug_string
+  def debug_string(paint = [])
     column_chars = @grid.column_size.to_s.length
     line_chars = @grid.row_size.to_s.length
     lines = @grid.to_a.each_with_index.map do |line, line_index|
       line_string = line.each_with_index.map do |cell, column_index|
-        "%#{column_chars}i%s" % [column_index, cell.tile]
+        tile = paint.include?(cell) ? '🔴' : cell.tile
+        "%#{column_chars}i%s" % [column_index, tile]
       end
       "%#{line_chars}i - %s" % [line_index, line_string.join]
     end
